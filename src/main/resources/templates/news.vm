@@ -1,0 +1,38 @@
+<html>
+<body>
+<pre>
+    hello VM.
+    ##你看不到我
+    #*
+    这里也看不到
+     *#
+    $!{value1}
+##使用集合的示意
+    #foreach($color in $!{colors} )
+        color: $!{foreach.index}  $!{color}
+    #end
+
+    #foreach($key in $map.keySet())
+        numbers: $!{foreach.index}/$!{foreach.count} $!{key} $map.get($key)
+    #end
+##使用自定义类的示意
+    User:$!{user.name}
+##使用统一的模版页，用parse
+    #set($title = "nowcoder")
+    Parse:#parse("Header.vm") <br>
+##定义函数
+    #macro(render_color $color $index)
+        Color by Render: $color, $index
+    #end
+    #foreach($color in $colors)
+        #render_color($color, $foreach.index)
+    #end
+    ##单引号和双引号的区别
+    #set($hello = "Hello")
+    #set($hword = "$!{hello} world")
+    #set($hword2 = '$!{hello} world')
+    hello1: $hword
+    hello2: $hword2
+</pre>
+</body>
+</html>
