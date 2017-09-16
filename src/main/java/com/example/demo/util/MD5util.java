@@ -13,7 +13,7 @@ import java.util.Map;
  * Created by Crys at 2017/8/19
  */
 public class MD5util {
-    private static final Logger logger = LoggerFactory.getLogger(MD5util.class);
+    private static final Logger logger = LoggerFactory.getLogger(MD5util.class.toString());
 
     public static String WEB_DOMAIN = "http://127.0.0.1:8080/";
     public static String FILE_DIR = "F:/read files/nowcoder/javaProgram/uploaded/";

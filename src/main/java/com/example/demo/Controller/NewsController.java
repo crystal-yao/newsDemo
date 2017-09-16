@@ -1,9 +1,6 @@
 package com.example.demo.Controller;
 
-import com.example.demo.Service.CommentService;
-import com.example.demo.Service.NewsService;
-import com.example.demo.Service.QiniuService;
-import com.example.demo.Service.UserService;
+import com.example.demo.Service.*;
 import com.example.demo.model.*;
 import com.example.demo.util.MD5util;
 import org.slf4j.Logger;
@@ -29,7 +26,7 @@ import java.util.List;
  */
 @Controller
 public class NewsController {
-    private static final Logger logger =  LoggerFactory.getLogger(loginController.class.toString());
+    private static final Logger logger =  LoggerFactory.getLogger(NewsController.class.toString());
 
     @Autowired
     NewsService newsService;
@@ -46,11 +43,20 @@ public class NewsController {
     @Autowired
     CommentService commentService;
 
+    @Autowired
+    LikeService likeService;
+
     //显示资讯具体内容
     @RequestMapping(path = {"/news/{newsId}"}, method = { RequestMethod.GET })
     public String newsDetail(@PathVariable("newsId") int newsId, Model model) {
         News news = newsService.getById(newsId);
         if(news != null) {
+            int localUserId = hostHolder.getUser().getId();
+            if(localUserId != 0) {
+                model.addAttribute( "like" , likeService.getLikeStatus(localUserId, EntityType.ENTITY_NEWS, news.getId())) ;
+            } else {
+                model.addAttribute("like", 0);
+            }
             //评论
             List<Comment> comments = commentService.getCommentsByEntity(news.getId(), EntityType.ENTITY_NEWS);
             List<ViewObject> commentVOs = new ArrayList<>();

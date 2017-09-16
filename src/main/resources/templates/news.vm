@@ -1,38 +1,55 @@
 <html>
 <body>
 <pre>
-    hello VM.
-    ##你看不到我
-    #*
-    这里也看不到
-     *#
-    $!{value1}
-##使用集合的示意
-    #foreach($color in $!{colors} )
-        color: $!{foreach.index}  $!{color}
-    #end
+Hello VM.
 
-    #foreach($key in $map.keySet())
-        numbers: $!{foreach.index}/$!{foreach.count} $!{key} $map.get($key)
-    #end
-##使用自定义类的示意
-    User:$!{user.name}
-##使用统一的模版页，用parse
-    #set($title = "nowcoder")
-    Parse:#parse("Header.vm") <br>
-##定义函数
-    #macro(render_color $color $index)
-        Color by Render: $color, $index
-    #end
-    #foreach($color in $colors)
-        #render_color($color, $foreach.index)
-    #end
-    ##单引号和双引号的区别
-    #set($hello = "Hello")
-    #set($hword = "$!{hello} world")
-    #set($hword2 = '$!{hello} world')
-    hello1: $hword
-    hello2: $hword2
+## 你看不到我
+
+#*
+这里都看不到
+*#
+
+value1:$!{value1}
+$!{value2}
+${value3}
+
+#foreach ($color in $colors)
+Color $!{foreach.index}/$!{foreach.count}: $!{color}
+#end
+
+#foreach($key in $map.keySet())
+Number $!{foreach.index}/$!{foreach.count}: $!{key} $map.get($key)
+#end
+
+#foreach($kv in $map.entrySet())
+Number $!{foreach.index}/$!{foreach.count}: $!{kv.key} $!{kv.value}
+#end
+
+
+User:$!{user.name}
+User:$!{user.getName()}
+
+#set($title = "nowcoder")
+Include: #include("header.vm") <br>
+Parse:#parse("header.vm")
+
+#macro (render_color, $color, $index)
+Color By Macro $index, $color
+#end
+
+#foreach ($color in $colors)
+    #render_color($color, $foreach.index)
+#end
+
+#set($hello = "hello")
+#set($hworld1 = "$!{hello} world")
+#set($hworld2 = '$!{hello} world')
+
+hworld1:$hworld1
+hworld2:$hworld2
+
+$!{colors.size()}
+
 </pre>
 </body>
 </html>

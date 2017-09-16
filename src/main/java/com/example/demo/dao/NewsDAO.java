@@ -20,6 +20,9 @@ public interface NewsDAO {
 
     @Update({"update ", TABLE_NAME, " set comment_count = #{commentCount} where id=#{id}"})
     int updateCommentCount(@Param("id") int id, @Param("commentCount") int commentCount);
+
+    @Update({"update ", TABLE_NAME, " set like_count = #{likeCount} where id=#{id}"})
+    int updateLikeCount(@Param("id") int id, @Param("likeCount") int likeCount);
     /**
      * 该函数通过xml配置的方式完成数据库操作，内容在resources下的相同目录下
      * 通过Param注解将参数传给了xml文件
